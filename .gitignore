@@ -1,0 +1,31 @@
+# Python
+*.pyc
+*.pyo
+__pycache__
+
+# Virtual environment
+venv/
+
+# Local configuration files
+.python-version
+backend.code-workspace
+
+# Database files (e.g., SQLite)
+db.sqlite3
+
+# Other files that don't need to be in the repository
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+
+# Django
+*.db
+*.db-journal
+
+# Downloaded packages
+*.egg
+*.egg-info
+dist/
+build/
