@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.utils import timezone
 
 from django.contrib.auth.models import User
@@ -156,6 +157,30 @@ class TaskSetCompletedAPIView(APIView):
         )
 
 task_update_completed_view = TaskSetCompletedAPIView.as_view()
+
+class TaskEditAPIView(generics.UpdateAPIView):
+    #permission_classes = (IsAuthenticated, )
+    serializer_class = TaskSerializer
+    lookup_field = 'pk'
+    
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+    
+    def perform_update(self, serializer):
+        data = serializer.validated_data.copy()
+        print(data)
+        
+
+        due_date = data.get('due_date', None)
+        task_list = data.get('task_list', None)
+
+        if not due_date and not task_list:
+            raise ValidationError("Provide due_date or task_list.")
+        
+        serializer.save(**data)
+    
+
+task_update_view = TaskEditAPIView.as_view()
 
 class TaskDestroyAPIView(generics.DestroyAPIView):
     permission_classes = (IsAuthenticated, )
