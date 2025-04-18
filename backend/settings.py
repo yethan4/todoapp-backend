@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS".split(" "))
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
@@ -149,6 +149,8 @@ REST_FRAMEWORK = {
  )
 }
 
+SECRET_KEY_JWT = os.environ.get("SECRET_KEY_JWT")
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
@@ -157,7 +159,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": "secretkey",
+    "SIGNING_KEY": SECRET_KEY_JWT,
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
